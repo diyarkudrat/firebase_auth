@@ -13,6 +13,23 @@ document.addEventListener("DOMContentLoaded", event => {
     //         document.write( data.createdAt + '<br>' )
 
     //     })
+
+    const productsRef = db.collection('products');
+
+    // Specify products where its price is greater than or equal to 10
+    // Can change operator """
+
+    // const query = productsRef.where('price', '>=', 10)
+
+    const query = productsRef.orderBy('price', 'desc').limit(4)
+
+    query.get()
+        .then(products => {
+            products.forEach(doc => {
+                data = doc.data()
+                document.write(`${data.name} at $${data.price} <br>`)
+            })
+        })
     
 })
 
