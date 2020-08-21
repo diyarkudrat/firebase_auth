@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", event => {
     const productsRef = db.collection('products');
 
     // Specify products where its price is greater than or equal to 10
-    // Can change operator """
+    // Can change operator
 
     // const query = productsRef.where('price', '>=', 10)
 
