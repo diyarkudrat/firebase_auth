@@ -1,37 +1,37 @@
-document.addEventListener("DOMContentLoaded", event => {
+// document.addEventListener("DOMContentLoaded", event => {
 
-    const app = firebase.app();
+//     const app = firebase.app();
     
-    const db = firebase.firestore();
+//     const db = firebase.firestore();
 
-    // const myPost = db.collection('posts').doc('firstpost');
+//     // const myPost = db.collection('posts').doc('firstpost');
 
-    // myPost.onSnapshot(doc => {
+//     // myPost.onSnapshot(doc => {
 
-    //         const data = doc.data();
-    //         document.write( data.title + '<br>')
-    //         document.write( data.createdAt + '<br>' )
+//     //         const data = doc.data();
+//     //         document.write( data.title + '<br>')
+//     //         document.write( data.createdAt + '<br>' )
 
-    //     })
+//     //     })
 
-    const productsRef = db.collection('products');
+//     const productsRef = db.collection('products');
 
-    // Specify products where its price is greater than or equal to 10
-    // Can change operator
+//     // Specify products where its price is greater than or equal to 10
+//     // Can change operator
 
-    // const query = productsRef.where('price', '>=', 10)
+//     // const query = productsRef.where('price', '>=', 10)
 
-    const query = productsRef.orderBy('price', 'desc').limit(4)
+//     const query = productsRef.orderBy('price', 'desc').limit(4)
 
-    query.get()
-        .then(products => {
-            products.forEach(doc => {
-                data = doc.data()
-                document.write(`${data.name} at $${data.price} <br>`)
-            })
-        })
+//     query.get()
+//         .then(products => {
+//             products.forEach(doc => {
+//                 data = doc.data()
+//                 document.write(`${data.name} at $${data.price} <br>`)
+//             })
+//         })
     
-})
+// })
 
 function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -49,4 +49,19 @@ function updatePost(e) {
     const db = firebase.firestore();
     const myPost = db.collection('posts').doc('firstpost');
     myPost.update({ title: e.target.value })
+}
+
+function uploadFile(files) {
+    const storageRef = firebase.storage().ref();
+    const imgRef = storageRef.child('image.jpg');
+
+    const file = files.item(0);
+
+    const task = imgRef.put(file)
+
+    task.then(snapshot => {
+        console.log(snapshot)
+        const url = snapshot.downloadURL
+        document.querySelector('#imgUpload').setAttribute('src', url)
+    })
 }
